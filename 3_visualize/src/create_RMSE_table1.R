@@ -1,9 +1,7 @@
 
 library(whisker)
 
-tabularize_RMSEs <- function(eval_data,
-                            data_dir = 'my_dir',
-                            out_diag_fname = 'model_diagnostic_text.txt') {
+tabularize_RMSEs <- function(eval_data, data_dir, out_diag_fname) {
   # Save the model diagnostics
   render_data <- list(pgdl_980mean = filter(eval_data, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       dl_980mean = filter(eval_data, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
@@ -22,4 +20,4 @@ tabularize_RMSEs <- function(eval_data,
   # Populate and save template
   whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = file.path(data_dir, out_diag_fname))
 }
-
+``

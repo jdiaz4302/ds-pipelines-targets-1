@@ -2,10 +2,7 @@
 
 library(sbtools)
 
-fetch_data <- function(data_dir = 'my_dir',
-                       data_fname = 'model_RMSEs.csv',
-                       sb_id = '5d925066e4b0c4f70d0d0599',
-                       names = 'me_RMSE.csv') {
+fetch_data <- function(data_dir, data_fname, sb_id, names) {
   # Construct filepath
   dir.create(data_dir)
   mendota_file <- file.path(data_dir, data_fname)

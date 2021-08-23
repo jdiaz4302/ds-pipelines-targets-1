@@ -2,9 +2,7 @@
 library(dplyr)
 library(stringr)
 
-import_cleaned_data <- function(data_dir = 'my_dir',
-                                in_fname = 'model_RMSEs.csv',
-                                out_fname = 'model_summary_results.csv') {
+import_cleaned_data <- function(data_dir, in_fname, out_dir, out_fname) {
   
   # Construct the filepath
   mendota_file = file.path(data_dir, in_fname)
@@ -23,6 +21,6 @@ import_cleaned_data <- function(data_dir = 'my_dir',
     ), n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
   
   # Save the csv
-  readr::write_csv(eval_data, file = file.path(data_dir, out_fname))
+  readr::write_csv(eval_data, file = file.path(out_dir, out_fname))
   
 }

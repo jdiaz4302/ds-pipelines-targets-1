@@ -1,6 +1,5 @@
 
-plot_RMSEs <- function(data_dir = 'my_dir',
-                       out_image_fname = 'figure_1.png') {
+plot_RMSEs <- function(data_dir, out_image_fname) {
   # Create a plot
   png(file = file.path(data_dir, out_image_fname), width = 8, height = 10, res = 200, units = 'in')
   par(omi = c(0,0,0.05,0.05), mai = c(1,1,0,0), las = 1, mgp = c(2,.5,0), cex = 1.5)
