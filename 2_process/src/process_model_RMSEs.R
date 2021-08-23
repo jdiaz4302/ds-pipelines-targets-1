@@ -2,13 +2,13 @@
 library(dplyr)
 library(stringr)
 
-import_cleaned_data <- function(data_dir, in_fname, out_dir, out_fname) {
+import_cleaned_data <- function(in_dir, in_fname, out_dir, out_fname) {
   
   # Construct the filepath
-  mendota_file = file.path(data_dir, in_fname)
+  in_full_file_path = file.path(in_dir, in_fname)
   
   # Assign visualization parameters to csv
-  eval_data <- readr::read_csv(mendota_file, col_types = 'iccd') %>%
+  eval_data <- readr::read_csv(in_full_file_path, col_types = 'iccd') %>%
     filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
     mutate(col = case_when(
       model_type == 'pb' ~ '#1b9e77',

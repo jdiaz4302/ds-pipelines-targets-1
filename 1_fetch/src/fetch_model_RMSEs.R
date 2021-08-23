@@ -2,10 +2,10 @@
 
 library(sbtools)
 
-fetch_data <- function(data_dir, data_fname, sb_id, names) {
+fetch_data <- function(out_dir, out_fname, sb_id, sb_files) {
   # Construct filepath
-  dir.create(data_dir)
-  mendota_file <- file.path(data_dir, data_fname)
+  dir.create(out_dir)
+  out_full_file_path <- file.path(out_dir, out_fname)
   # Retrieve data
-  item_file_download(sb_id, names = names, destinations = mendota_file, overwrite_file = TRUE)
+  item_file_download(sb_id, names = sb_files, destinations = out_full_file_path, overwrite_file = TRUE)
 }
