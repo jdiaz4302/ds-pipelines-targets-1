@@ -1,35 +1,36 @@
 library(targets)
-source("code.R")
+
+source('1_fetch/src/fetch_model_RMSEs.R')
+source('2_process/src/process_model_RMSEs.R')
+source('3_visualize/src/create_RMSE_figure1.R')
+source('3_visualize/src/create_RMSE_table1.R')
+
 tar_option_set(packages = c("tidyverse", "sbtools", "whisker"))
 
 list(
   # Get the data from ScienceBase
   tar_target(
-    model_RMSEs_csv,
-    download_data(out_filepath = "1_fetch/out/model_RMSEs.csv"),
-    format = "file"
+    raw_data,
+    fetch_and_load_data(out_fpath = "1_fetch/out/model_RMSEs.csv",
+                        sb_id = "5d925066e4b0c4f70d0d0599",
+                        sb_files = "me_RMSE.csv")
   ), 
-  # Prepare the data for plotting
+  # Prepare the data for plotting and save it
   tar_target(
     eval_data,
-    process_data(in_filepath = model_RMSEs_csv),
+    process_data(raw_data = raw_data,
+                 out_fpath = "2_process/out/model_summary_results.csv"),
   ),
   # Create a plot
   tar_target(
     figure_1_png,
-    make_plot(out_filepath = "3_visualize/out/RMSE_figure.png", data = eval_data), 
-    format = "file"
-  ),
-  # Save the processed data
-  tar_target(
-    model_summary_results_csv,
-    write_csv(eval_data, file = "model_summary_results.csv"), 
-    format = "file"
+    plot_RMSEs(eval_data = eval_data,
+               out_fpath = "3_visualize/out/RMSE_figure.png")
   ),
   # Save the model diagnostics
   tar_target(
     model_diagnostic_text_txt,
-    generate_model_diagnostics(out_filepath = "model_diagnostic_text.txt", data = eval_data), 
-    format = "file"
+    tabularize_RMSEs(eval_data = eval_data,
+                     out_fpath = "3_visualize/out/model_diagnostic_text.txt")
   )
 )
