@@ -17,7 +17,4 @@ process_data <- function(in_fpath, out_fpath) {
       model_type == 'pgdl' ~ 23
     ), n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
   
-  # Save the csv
-  readr::write_csv(eval_data, file = out_fpath)
-  
 }
