@@ -2,13 +2,10 @@
 library(dplyr)
 library(stringr)
 
-import_cleaned_data <- function(in_dir, in_fname, out_dir, out_fname) {
-  
-  # Construct the filepath
-  in_full_file_path = file.path(in_dir, in_fname)
+process_data <- function(raw_data, out_fpath) {
   
   # Assign visualization parameters to csv
-  eval_data <- readr::read_csv(in_full_file_path, col_types = 'iccd') %>%
+  eval_data <- raw_data %>%
     filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
     mutate(col = case_when(
       model_type == 'pb' ~ '#1b9e77',
@@ -21,6 +18,6 @@ import_cleaned_data <- function(in_dir, in_fname, out_dir, out_fname) {
     ), n_prof = as.numeric(str_extract(exper_id, '[0-9]+')))
   
   # Save the csv
-  readr::write_csv(eval_data, file = file.path(out_dir, out_fname))
+  readr::write_csv(eval_data, file = out_fpath)
   
 }
