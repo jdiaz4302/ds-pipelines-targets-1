@@ -42,4 +42,6 @@ plot_RMSEs <- function(eval_data, out_fpath) {
   text(2.3, 1.1, 'Process-Based', pos = 4, cex = 1.1)
   
   dev.off()
+  
+  return(out_fpath)
 }

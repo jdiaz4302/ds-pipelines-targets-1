@@ -19,4 +19,5 @@ tabularize_RMSEs <- function(eval_data, out_fpath) {
   The PGDL prediction accuracy was more robust compared to PB when only two profiles were provided for training ({{pgdl_2mean}} and {{pb_2mean}}°C, respectively). '
   # Populate and save template
   whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = out_fpath)
+  return(out_fpath)
 }
