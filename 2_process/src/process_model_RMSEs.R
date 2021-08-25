@@ -2,10 +2,10 @@
 library(dplyr)
 library(stringr)
 
-process_data <- function(raw_data, out_fpath) {
+process_data <- function(in_fpath, out_fpath) {
   
   # Assign visualization parameters to csv
-  eval_data <- raw_data %>%
+  eval_data <- readr::read_csv(in_fpath, col_types = 'iccd') %>%
     filter(str_detect(exper_id, 'similar_[0-9]+')) %>%
     mutate(col = case_when(
       model_type == 'pb' ~ '#1b9e77',
