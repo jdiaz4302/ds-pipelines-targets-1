@@ -13,24 +13,27 @@ list(
     raw_data,
     fetch_and_load_data(out_fpath = "1_fetch/out/model_RMSEs.csv",
                         sb_id = "5d925066e4b0c4f70d0d0599",
-                        sb_files = "me_RMSE.csv")
+                        sb_files = "me_RMSE.csv"),
+    format = 'file'
   ), 
   # Prepare the data for plotting and save it
   tar_target(
     eval_data,
-    process_data(raw_data = raw_data,
+    process_data(in_fpath = raw_data,
                  out_fpath = "2_process/out/model_summary_results.csv"),
   ),
   # Create a plot
   tar_target(
     figure_1_png,
     plot_RMSEs(eval_data = eval_data,
-               out_fpath = "3_visualize/out/RMSE_figure.png")
+               out_fpath = "3_visualize/out/RMSE_figure.png"),
+    format = 'file'
   ),
   # Save the model diagnostics
   tar_target(
     model_diagnostic_text_txt,
     tabularize_RMSEs(eval_data = eval_data,
-                     out_fpath = "3_visualize/out/model_diagnostic_text.txt")
+                     out_fpath = "3_visualize/out/model_diagnostic_text.txt"),
+    format = 'file'
   )
 )
