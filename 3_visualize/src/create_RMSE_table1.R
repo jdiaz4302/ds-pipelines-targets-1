@@ -1,7 +1,7 @@
 
 library(whisker)
 
-tabularize_RMSEs <- function(eval_data, out_dir, out_fname) {
+tabularize_RMSEs <- function(eval_data, out_fpath) {
   # Save the model diagnostics
   render_data <- list(pgdl_980mean = filter(eval_data, model_type == 'pgdl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
                       dl_980mean = filter(eval_data, model_type == 'dl', exper_id == "similar_980") %>% pull(rmse) %>% mean %>% round(2),
@@ -18,6 +18,5 @@ tabularize_RMSEs <- function(eval_data, out_dir, out_fname) {
   ({{dl_500mean}} and {{pb_500mean}}°C, respectively) or more, but worse than PB when training was reduced to 100 profiles ({{dl_100mean}} and {{pb_100mean}}°C respectively) or fewer.
   The PGDL prediction accuracy was more robust compared to PB when only two profiles were provided for training ({{pgdl_2mean}} and {{pb_2mean}}°C, respectively). '
   # Populate and save template
-  whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = file.path(out_dir, out_fname))
+  whisker.render(template_1 %>% str_remove_all('\n') %>% str_replace_all('  ', ' '), render_data ) %>% cat(file = out_fpath)
 }
-``
